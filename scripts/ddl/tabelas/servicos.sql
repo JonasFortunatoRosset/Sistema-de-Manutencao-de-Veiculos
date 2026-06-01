@@ -1,8 +1,5 @@
 CREATE TABLE [servicos] (
-  [id] tinyint PRIMARY KEY,
-  [nome] varchar(100),
-  [descricao] varchar(255),
-  [valor_minimo] numeric(14,2),
-  [valor_maximo] numeric(14,2)
+  [id] tinyint PRIMARY KEY IDENTITY(1, 1),
+  [nome] varchar(100) UNIQUE NOT NULL
 )
 GO

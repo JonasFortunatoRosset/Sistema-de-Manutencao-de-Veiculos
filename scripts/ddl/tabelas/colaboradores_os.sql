@@ -1,7 +1,7 @@
 CREATE TABLE [colaboradores_os] (
-  [id] integer PRIMARY KEY,
-  [colaboradores_id] integer,
-  [ordem_de_serviço_id] integer
+  [id] integer PRIMARY KEY IDENTITY(1, 1),
+  [colaboradores_id] integer NOT NULL,
+  [ordem_de_serviço_id] integer NOT NULL
 )
 GO
 

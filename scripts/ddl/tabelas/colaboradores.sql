@@ -1,15 +1,15 @@
 CREATE TABLE [colaboradores] (
-  [id] smallint PRIMARY KEY,
-  [nome] varchar(100),
-  [funcao] varchar(50),
-  [estado] char(2),
-  [cidade] varchar(50),
-  [rua] varchar(60),
-  [numero] varchar(10),
-  [cep] char(9),
+  [id] smallint PRIMARY KEY IDENTITY(1, 1),
+  [nome] varchar(100) NOT NULL,
+  [funcao] varchar(50) NOT NULL,
+  [estado] char(2) NOT NULL,
+  [cidade] varchar(50) NOT NULL,
+  [rua] varchar(60) NOT NULL,
+  [numero] varchar(10) NOT NULL,
+  [cep] char(9) NOT NULL,
   [complemento] varchar(50),
-  [status] tinyint,
-  [dt_cadastro] timestamp,
-  [dt_demissao] timestamp
+  [status] tinyint NOT NULL,
+  [dt_cadastro] timestamp NOT NULL,
+  [dt_demissao] timestamp NOT NULL
 )
 GO

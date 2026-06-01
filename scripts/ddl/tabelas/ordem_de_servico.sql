@@ -1,10 +1,9 @@
 CREATE TABLE [ordem_de_servico] (
-  [id] integer PRIMARY KEY,
+  [id] integer PRIMARY KEY IDENTITY(1, 1),
   [odometro] integer,
-  [tempo] time,
-  [preco] numeric(14,2),
-  [veiculo_id] integer,
-  [servico_id] integer
+  [dt_inicio] date NOT NULL,
+  [dt_fim] date,
+  [veiculo_id] integer NOT NULL
 )
 GO
 

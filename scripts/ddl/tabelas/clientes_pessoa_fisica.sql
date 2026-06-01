@@ -1,7 +1,7 @@
 CREATE TABLE [clientes_pessoa_fisica] (
-  [id] integer,
-  [cpf] nvarchar(255),
-  [cliente_id] integer
+  [id] integer PRIMARY KEY IDENTITY(1, 1),
+  [cpf] nvarchar(255) NOT NULL,
+  [cliente_id] integer NOT NULL
 )
 GO
 

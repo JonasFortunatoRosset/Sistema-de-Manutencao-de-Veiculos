@@ -1,7 +1,7 @@
 CREATE TABLE [pecas] (
-  [id] integer,
+  [id] integer PRIMARY KEY IDENTITY(1, 1),
   [preco] numeric(14,2),
-  [quantidade] smallint,
+  [quantidade] smallint NOT NULL,
   [dt_compra] date,
   [fornecedores_id] integer
 )

@@ -1,12 +1,12 @@
 CREATE TABLE [veiculos] (
-  [id] integer PRIMARY KEY,
-  [placa] nvarchar(255),
-  [tp_veiculo] nvarchar(255) CHECK (tp_veiculo in ('carro','moto')),
-  [marca] nvarchar(255),
-  [modelo] nvarchar(255),
-  [ano] smallint,
-  [tp_combustivel] nvarchar(255) CHECK (tp_combustivel in ('diesel','gasolina','elétrico','híbrido')),
-  [cliente_id] integer
+  [id] integer PRIMARY KEY IDENTITY(1, 1),
+  [placa] nvarchar(255) UNIQUE NOT NULL,
+  [tp_veiculo] nvarchar(255) NOT NULL CHECK (tp_veiculo in ('carro','moto')),
+  [marca] nvarchar(255) NOT NULL,
+  [modelo] nvarchar(255) NOT NULL,
+  [ano] smallint NOT NULL,
+  [tp_combustivel] nvarchar(255) NOT NULL CHECK (tp_combustivel in ('diesel','gasolina','elétrico','híbrido')),
+  [cliente_id] integer NOT NULL
 )
 GO
 
