@@ -1,8 +1,9 @@
 CREATE TABLE [clientes] (
   [id] integer PRIMARY KEY IDENTITY(1, 1),
+  [cpf] char(11) UNIQUE NOT NULL,
   [nome] varchar(100) UNIQUE NOT NULL,
-  [telefone] nvarchar(255) NOT NULL,
-  [email] nvarchar(255) NOT NULL,
+  [telefone] varchar(15) NOT NULL,
+  [email] varchar(254) NOT NULL,
   [estado] char(2) NOT NULL,
   [cidade] varchar(50) NOT NULL,
   [rua] varchar(60) NOT NULL,
