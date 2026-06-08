@@ -34,7 +34,7 @@ CREATE TABLE [colaboradores] (
   [cep] char(9) NOT NULL,
   [complemento] varchar(50),
   [status] tinyint NOT NULL,
-  [dt_cadastro] datetime2(2) NOT NULL,
+  [dt_cadastro] datetime2(2)  DEFAULT (SYSDATETIME()) NOT NULL,
   [dt_demissao] datetime2(2) NULL
 )
 GO
@@ -48,7 +48,7 @@ CREATE TABLE [fornecedores] (
   [numero] varchar(10) NOT NULL,
   [cep] char(9) NOT NULL,
   [complemento] varchar(50) NOT NULL,
-  [dt_cadastro] datetime2(2) NOT NULL DEFAULT (SYSDATETIME()),
+  [dt_cadastro] datetime2(2) DEFAULT (SYSDATETIME()) NOT NULL,
   [status] tinyint NOT NULL
 )
 GO

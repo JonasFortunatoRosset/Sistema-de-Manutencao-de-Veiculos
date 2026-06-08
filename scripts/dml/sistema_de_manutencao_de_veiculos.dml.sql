@@ -11,6 +11,7 @@ VALUES
 ('49169393443', 'Diego Almeida', '5581988793749', 'diego.almeida@gmail.com', 'PE', 'Recife', 'Avenida Boa Viagem', '1473', '51011000'),
 ('22753298114', 'Amanda Ribeiro', '5562924914617', 'amanda.ribeiro@gmail.com', 'GO', 'Goiânia', 'Avenida Goiás', '653', '74010010'),
 ('12338956712', 'João Pedro Lima', '5548945673214', 'joaolima@gmail.com', 'RJ', 'Niterói', 'Rua Moreira César', '330', ' 24230050');
+GO
 
 INSERT INTO colaboradores(nome, cpf, funcao, estado, cidade, rua, numero, cep, status, dt_cadastro, dt_demissao)
 VALUES
@@ -57,6 +58,7 @@ VALUES
 ('VBH6V34', 'carro', 'BMW', 'iX3', 2024, 'elétrico', 9),
 ('GYN0J90', 'carro', 'Honda', 'HR-V', 2023, 'gasolina', 10),
 ('WSX5X78', 'carro', 'Toyota', 'Corolla Altis', 2023, 'híbrido', 10);
+GO
 
 INSERT INTO ordem_de_servico(odometro, dt_inicio, dt_fim, veiculo_id)
 VALUES
@@ -87,6 +89,7 @@ VALUES
 (14100, '2026-06-06', NULL, 17),
 (6100,  '2026-06-06', NULL, 18),
 (22900, '2026-06-07', NULL, 19);
+GO
 
 INSERT INTO colaboradores_os(colaboradores_id, ordem_de_servico_id)
 VALUES
@@ -131,4 +134,152 @@ VALUES
 (15, 25),
 (10, 26),
 (6, 27);
+GO
+
+INSERT INTO fornecedores(
+    cnpj, nome, estado, cidade, rua, numero, cep, complemento, status
+) VALUES 
+('12345678000195', 'Freios e Amortecedores Líder Ltda', 'SP', 'São Paulo', 'Avenida Paulista', '1000', '01311-100', 'Andar 4 Sala 42', 1),
+('98765432000110', 'Sul Motores e Motopeças Distribuidora', 'RS', 'Porto Alegre', 'Rua dos Andradas', '500', '90020-002', 'Galpão B', 2),
+('45678912000130', 'TecnoInjeção Distribuidora de Autopeças', 'RJ', 'Rio de Janeiro', 'Avenida Rio Branco', '123', '20040-001', 'Bloco A', 1),
+('11223344000155', 'Metalúrgica Central de Pistões e Bielas', 'MG', 'Belo Horizonte', 'Avenida Afonso Pena', '2500', '30130-009', 'Sala 101', 1),
+('55667788000122', 'Paraná Rolamentos e Retentores', 'PR', 'Curitiba', 'Rua XV de Novembro', '850', '80020-310', 'Fundos', 0),
+('99887766000144', 'EletroPartes Componentes Elétricos', 'SC', 'Blumenau', 'Rua XV de Novembro', '1200', '89010-002', 'Portão 3', 2),
+('33445566000188', 'Atacadista Norte de Radiadores e Arrefecimento', 'PA', 'Belém', 'Avenida Presidente Vargas', '450', '66017-000', 'Loja 02', 1),
+('22334455000177', 'Brisa Escapamentos e Suspensões', 'BA', 'Salvador', 'Avenida Sete de Setembro', '3100', '40060-001', 'Térreo', 1),
+('77889900000111', 'Goiás Embreagens e Transmissões', 'GO', 'Goiânia', 'Avenida Anhanguera', '5500', '74043-012', 'Quadra 12 Lote 5', 1),
+('88990011000133', 'Distrito Lanternas e Latarias S.A.', 'DF', 'Brasília', 'Setor Comercial Sul', 'Q 4', '70304-000', 'Bloco A Loja 15', 1);
+GO
+
+INSERT INTO pecas (
+    nome, preco, quantidade, dt_compra, fornecedores_id
+) VALUES 
+('Pastilha de Freio Cerâmica Dianteira', 349.90, 15, '2026-05-10', 1),
+('Amortecedor Pressurizado Turbogás Dianteiro', 620.00, 8,  '2026-05-12', 1),
+('Kit Transmissão Completo (Corrente/Coroa/Pinhão) - Moto', 180.00, 25, '2026-05-14', 2),
+('Filtro de Óleo do Motor Linha Leve', 95.00,  40, '2026-05-14', 2),
+('Bico Injetor Multiponto Flex', 189.50, 25, '2026-05-15', 3),
+('Sensor de Fluxo de Ar (MAF)', 299.00, 10, '2026-05-16', 3),
+('Jogo de Pistões do Motor com Anéis Std', 890.00, 5,  '2026-05-18', 4),
+('Kit de Bielas Forjadas de Alta Performance', 540.00, 6,  '2026-05-18', 4),
+('Rolamento de Roda Traseira Blindado', 120.00, 40, '2026-05-20', 5),
+('Retentor de Vedação do Virabrequim', 45.00,  60, '2026-05-20', 5),
+('Alternador de Ignição 90A', 420.00, 7,  '2026-05-22', 6),
+('Bobina de Ignição Eletrônica', 180.00, 20, '2026-05-22', 6),
+('Radiador de Água do Motor Brasado', 380.00, 10, '2026-05-25', 7),
+('Válvula Termostática de Arrefecimento', 85.00,  30, '2026-05-25', 7),
+('Abafador de Escapamento Silencioso Traseiro', 310.00, 14, '2026-05-28', 8),
+('Bucha de Poliuretano da Balança Dianteira', 150.00, 22, '2026-05-28', 8),
+('Kit de Embreagem Completo (Platô/Disco/Rolamento)', 750.00, 6,  '2026-06-01', 9),
+('Cabo de Acionamento da Embreagem', 195.00, 15, '2026-06-01', 9),
+('Lanterna Traseira Acrílica Lado Direito', 280.00, 8,  '2026-06-04', 10),
+('Parachoque Dianteiro com Furo para Milha', 410.00, 4,  '2026-06-05', 10);
+GO
+
+INSERT INTO servicos (nome) VALUES 
+('Substituição de Pastilhas e Discos de Freio'),
+('Troca de Amortecedores e Molas Dianteiras'),
+('Substituição de Kit Transmissão (Relação) de Moto'),
+('Revisão Geral de Moto com Troca de Filtros e Óleo'),
+('Limpeza e Diagnóstico de Bicos Injetores'),
+('Mapeamento e Diagnóstico de Sensores de Injeção'),
+('Retífica Completa do Bloco do Motor'),
+('Substituição de Pistões, Bielas e Anéis do Motor'),
+('Troca de Rolamento de Roda e Cubo'),
+('Substituição de Retentores e Vedação do Motor'),
+('Manutenção e Troca de Alternador'),
+('Diagnóstico de Sistema de Ignição e Bobinas'),
+('Limpeza de Sistema de Arrefecimento e Troca de Radiador'),
+('Substituição de Abafador e Tubulação de Escapamento'),
+('Substituição de Kit de Embreagem Completo');
+GO
+
+INSERT INTO itens_inventario (
+    nome, descricao, status, dt_compra, dt_baixa
+) VALUES 
+('Elevador Automotivo Hidráulico 4T', 'Elevador trifásico para carros e SUVs até 4 toneladas', 1, '2012-03-15', NULL),
+('Elevador Hidráulico para Motos', 'Plataforma pneumática/hidráulica para manutenção de motocicletas', 1, '2014-06-20', NULL),
+('Scanner de Diagnóstico Automotivo OBD2', 'Scanner antigo com atualização de software via cabo - Descontinuado', 0, '2011-02-10', '2019-11-30'),
+('Jogo de Chaves de Impacto Pneumática', 'Chave de impacto de 1/2 polegada com jogo de soquetes de cromo vanádio', 1, '2015-08-05', NULL),
+('Torquímetro de Estalo 1/2', 'Torquímetro de precisão para aperto de cabeçotes e rodas (40-210 Nm)', 1, '2016-04-12', NULL),
+('Compressor de Ar Direto 20 PCM', 'Compressor de ar com reservatório de 200 litros para ferramentas pneumáticas', 1, '2012-03-22', NULL),
+('Carregador e Auxiliar de Partida 12V/24V', 'Equipamento para carga rápida de baterias e auxílio de partida', 1, '2013-09-18', NULL),
+('Analisador de Gases de Escapamento', 'Equipamento para teste de emissões de motores a combustão', 1, '2017-07-02', NULL),
+('Mesa de Trabalho com Morsa de Bancada', 'Bancada de aço reforçada com morsa articulada de 6 polegadas', 1, '2012-01-20', NULL),
+('Carrinho de Ferramentas Completo', 'Carrinho organizador com 7 gavetas contendo chaves fixas, combinadas e fendas', 1, '2015-02-10', NULL);
+GO
+
+INSERT INTO servicos_os (
+    descricao, preco, servicos_id, ordem_de_servico_id
+) VALUES 
+('Substituição de pastilhas de freio dianteiras', 120.00, 1, 1),
+('Troca de amortecedores dianteiros e batentes', 280.00, 2, 2),
+('Troca de óleo do motor e filtro de combustível', 80.00, 4, 3),
+('Substituição de pastilhas traseiras', 110.00, 1, 4),
+('Revisão geral e troca de fluido de freio', 150.00, 4, 5),
+('Limpeza de bicos injetores via ultrassom', 180.00, 5, 6),
+('Troca do sensor MAF e varredura de erros', 120.00, 6, 7),
+('Substituição de pistões e anéis do bloco', 1200.00, 8, 8),
+('Retífica completa do bloco do motor', 2200.00, 7, 8),
+('Substituição de retentor do virabrequim', 350.00, 10, 9),
+('Troca de rolamento de roda dianteira esquerda', 130.00, 9, 10),
+('Manutenção preventiva no alternador', 190.00, 11, 11),
+('Substituição de bobina de ignição falhando', 90.00, 12, 12),
+('Limpeza de arrefecimento e troca de radiador', 250.00, 13, 13),
+('Substituição de abafador de escapamento', 120.00, 14, 14),
+('Instalação de kit de embreagem completo', 450.00, 15, 15),
+('Troca de kit transmissão/relação de moto', 90.00, 3, 16),
+('Revisão de moto e regulagem de válvulas', 200.00, 4, 17),
+('Substituição de pastilha de freio', 120.00, 1, 18),
+('Troca de amortecedor pressurizado', 280.00, 2, 18),
+('Mapeamento e diagnóstico de sensores', 150.00, 6, 19),
+('Limpeza de bicos injetores e troca de filtros', 180.00, 5, 20),
+('Troca de rolamento de cubo traseiro', 140.00, 9, 21),
+('Substituição de retentores de válvulas', 400.00, 10, 22),
+('Troca de alternador avariado', 220.00, 11, 23),
+('Substituição de bobinas de ignição', 90.00, 12, 24),
+('Substituição de radiador com vazamento', 250.00, 13, 25),
+('Troca de abafador esportivo', 130.00, 14, 26),
+('Troca de embreagem e atuador hidráulico', 500.00, 15, 27),
+('Retífica de cabeçote por superaquecimento', 1800.00, 7, 5),
+('Substituição de bielas e bronzinas', 950.00, 8, 12),
+('Diagnóstico elétrico de ignição', 100.00, 12, 3),
+('Troca de rolamento de roda oposta', 130.00, 9, 10),
+('Substituição de pastilhas de freio cerâmica', 140.00, 1, 15),
+('Substituição de amortecedores traseiros', 260.00, 2, 15),
+('Limpeza de bicos complementares', 180.00, 5, 22),
+('Troca de óleo de bengala e retentores', 150.00, 10, 16),
+('Remapeamento de injeção eletrônica', 300.00, 6, 17),
+('Substituição de catalisador e escapamento', 200.00, 14, 2),
+('Revisão do sistema elétrico do alternador', 190.00, 11, 24);
+GO
+
+INSERT INTO servicos_os_pecas(
+    quantidade, preco_venda, servicos_os_id, pecas_id
+) VALUES 
+(1, 410.00, 1, 1),
+(2, 720.00, 2, 2),
+(1, 120.00, 3, 4),
+(1, 410.00, 4, 1),
+(4, 220.00, 6, 5),
+(1, 350.00, 7, 6),
+(1, 990.00, 8, 7),
+(1, 620.00, 8, 8),
+(1, 65.00, 9, 10),
+(1, 150.00, 10, 9),
+(1, 490.00, 11, 11),
+(1, 210.00, 12, 12),
+(1, 440.00, 13, 13),
+(1, 110.00, 13, 14),
+(1, 380.00, 14, 15),
+(1, 890.00, 15, 17),
+(1, 240.00, 15, 18),
+(1, 220.00, 16, 3),
+(1, 120.00, 17, 4),
+(1, 150.00, 21, 9),
+(1, 490.00, 23, 11),
+(2, 210.00, 24, 12),
+(1, 440.00, 25, 13),
+(1, 380.00, 26, 15),
+(1, 890.00, 27, 17);
 GO

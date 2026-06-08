@@ -11,3 +11,4 @@ VALUES
 ('49169393443', 'Diego Almeida', '5581988793749', 'diego.almeida@gmail.com', 'PE', 'Recife', 'Avenida Boa Viagem', '1473', '51011000'),
 ('22753298114', 'Amanda Ribeiro', '5562924914617', 'amanda.ribeiro@gmail.com', 'GO', 'Goiânia', 'Avenida Goiás', '653', '74010010'),
 ('12338956712', 'João Pedro Lima', '5548945673214', 'joaolima@gmail.com', 'RJ', 'Niterói', 'Rua Moreira César', '330', ' 24230050');
+GO

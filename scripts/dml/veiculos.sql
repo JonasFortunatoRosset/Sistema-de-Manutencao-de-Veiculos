@@ -19,3 +19,4 @@ VALUES
 ('VBH6V34', 'carro', 'BMW', 'iX3', 2024, 'elétrico', 9),
 ('GYN0J90', 'carro', 'Honda', 'HR-V', 2023, 'gasolina', 10),
 ('WSX5X78', 'carro', 'Toyota', 'Corolla Altis', 2023, 'híbrido', 10);
+GO
