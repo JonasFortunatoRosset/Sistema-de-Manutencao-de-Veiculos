@@ -1,0 +1,21 @@
+INSERT INTO veiculos(placa, tp_veiculo, marca, modelo, ano, tp_combustivel, cliente_id)
+VALUES
+('BRA1A12', 'carro', 'Chevrolet', 'Onix', 2022, 'gasolina', 1),
+('KRM4E45', 'moto', 'Honda', 'CG 160 Titan', 2021, 'gasolina', 1),
+('RIO2B34', 'carro', 'Volkswagen', 'Polo', 2023, 'gasolina', 2),
+('NXT5F67', 'moto', 'Yamaha', 'FZ25 Fazer', 2022, 'gasolina', 2),
+('MCO9H12', 'carro', 'BYD', 'Dolphin', 2024, 'elétrico', 2),
+('BHZ3C56', 'carro', 'Fiat', 'Fastback', 2023, 'gasolina', 3),
+('POA4D78', 'carro', 'Hyundai', 'HB20', 2021, 'gasolina', 4),
+('CWB5E90', 'carro', 'Jeep', 'Compass', 2022, 'diesel', 5),
+('ZXC8M45', 'moto', 'Honda', 'XRE 300', 2019, 'gasolina', 5),
+('XSE4P12', 'carro', 'Caoa Chery', 'Tiggo 7 Pro Hyflux', 2023, 'híbrido', 6),
+('SSA7G34', 'carro', 'Fiat', 'Argo', 2022, 'gasolina', 7),
+('POI2Q34', 'moto', 'Honda', 'CB 300F Twister', 2023, 'gasolina', 7),
+('MKJ5R56', 'carro', 'Ford', 'Ranger', 2022, 'diesel', 7),
+('FOR8H56', 'carro', 'Nissan', 'Kicks', 2021, 'gasolina', 8),
+('REC9I78', 'carro', 'Peugeot', '208', 2023, 'gasolina', 9),
+('REW3U12', 'moto', 'Shineray', 'Worker 125', 2021, 'gasolina', 9),
+('VBH6V34', 'carro', 'BMW', 'iX3', 2024, 'elétrico', 9),
+('GYN0J90', 'carro', 'Honda', 'HR-V', 2023, 'gasolina', 10),
+('WSX5X78', 'carro', 'Toyota', 'Corolla Altis', 2023, 'híbrido', 10);

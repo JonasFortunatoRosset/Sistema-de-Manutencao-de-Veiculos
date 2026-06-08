@@ -7,8 +7,5 @@ CREATE TABLE [ordem_de_servico] (
 )
 GO
 
-ALTER TABLE [ordem_de_servico] ADD FOREIGN KEY ([servico_id]) REFERENCES [servicos] ([id])
-GO
-
 ALTER TABLE [ordem_de_servico] ADD FOREIGN KEY ([veiculo_id]) REFERENCES [veiculos] ([id])
 GO

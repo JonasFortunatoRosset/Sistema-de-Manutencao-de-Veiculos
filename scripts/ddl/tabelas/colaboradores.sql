@@ -1,6 +1,7 @@
 CREATE TABLE [colaboradores] (
   [id] smallint PRIMARY KEY IDENTITY(1, 1),
   [nome] varchar(100) NOT NULL,
+  [cpf] char(11) UNIQUE NOT NULL,
   [funcao] varchar(50) NOT NULL,
   [estado] char(2) NOT NULL,
   [cidade] varchar(50) NOT NULL,
@@ -9,7 +10,7 @@ CREATE TABLE [colaboradores] (
   [cep] char(9) NOT NULL,
   [complemento] varchar(50),
   [status] tinyint NOT NULL,
-  [dt_cadastro] timestamp NOT NULL,
-  [dt_demissao] timestamp NOT NULL
+  [dt_cadastro] datetime2(2) NOT NULL,
+  [dt_demissao] datetime2(2) NULL
 )
 GO

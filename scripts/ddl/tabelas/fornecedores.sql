@@ -8,7 +8,7 @@ CREATE TABLE [fornecedores] (
   [numero] varchar(10) NOT NULL,
   [cep] char(9) NOT NULL,
   [complemento] varchar(50) NOT NULL,
-  [dt_cadastro] timestamp NOT NULL DEFAULT (getdate()),
+  [dt_cadastro] datetime2(2) NOT NULL DEFAULT (SYSDATETIME()),
   [status] tinyint NOT NULL
 )
 GO
