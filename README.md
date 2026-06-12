@@ -1,4 +1,4 @@
-## Projeto Sistema de Manutenção de Veículos - GRUPO A
+## Projeto Sistema de Manutenção de Veículos
 
 Este projeto consiste na criação de um modelo físico de um banco de dados para um sistema de gerenciamento de oficina mecânica.
 O sistema permite o controle de clientes, veículos, ordens de serviço, colaboradores, peças e fornecedores, utilizando todos os conceitos e dinâmicas práticas de SQL desenvolvidas em aula.
