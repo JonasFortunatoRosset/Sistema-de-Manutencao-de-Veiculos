@@ -14,7 +14,7 @@ Utilizamos a ferramenta de modelagem de dados [dbdiagram.io](https://dbdiagram.i
 ![Modelo Físico](modelo-fisico/modelo-fisico.png)
 
 ### Dicionário de Dados
-As informações sobre as tabelas e índices foram documentadas na planilha [DDL_Sistema_Manutencao_Veiculos.xlsx](dicionario_dados/DDL_Sistema_Manutencao_Veiculos.xlsx).
+As informações sobre as tabelas e índices foram documentadas na planilha [DDL_Sistema_Manutencao_Veiculos.xlsx](dicionario-dados/DDL_Sistema_Manutencao_Veiculos_v3.xlsx).
 
 ### Scripts SQL
 Para este projeto foi utilizado o banco de dados [SQL Server](https://www.microsoft.com/pt-br/sql-server).
