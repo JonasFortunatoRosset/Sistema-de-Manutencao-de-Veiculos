@@ -5,7 +5,8 @@ O sistema permite o controle de clientes, veículos, ordens de serviço, colabor
 
 ### Integrantes
 Nathan Rocha Gomes - [NathanRochaGomes](https://github.com/NathanRochaGomes)<br>
-Jonas Fortunato Rosset - conta github<br>
+Jonas Fortunato Rosset - [JonasFortunatoRosset](https://github.com/JonasFortunatoRosset)<br>
+Emanuel Reus - conta github<br>
 Gabriel Vaz Lima - conta github<br>
 
 ### Modelo Físico
