@@ -1,3 +1,9 @@
+CREATE DATABASE sistema_de_manutencao_de_veiculos
+GO
+
+USING sistema_de_manutencao_de_veiculos
+GO
+
 CREATE TABLE [faturas] (
   [id] int PRIMARY KEY IDENTITY(1, 1),
   [ordem_de_servico_id] int NOT NULL,
@@ -6,7 +12,7 @@ CREATE TABLE [faturas] (
 GO
 
 CREATE TABLE [tipos_de_pagamento] (
-  [id] tinyint,
+  [id] tinyint PRIMARY KEY IDENTITY(1, 1),
   [nome] varchar(100) NOT NULL
 )
 GO
@@ -42,8 +48,9 @@ CREATE TABLE [colaboradores] (
   [numero] varchar(10) NOT NULL,
   [cep] char(9) NOT NULL,
   [complemento] varchar(50),
+  [salario] numeric(14,2) NOT NULL,
   [status] tinyint NOT NULL,
-  [dt_cadastro] datetime2(2) DEFAULT (SYSDATETIME()) NOT NULL,
+  [dt_cadastro] datetime2(2) NOT NULL,
   [dt_demissao] datetime2(2),
   [cargo_id] tinyint NOT NULL
 )
@@ -62,6 +69,8 @@ GO
 CREATE TABLE [ordem_de_servico] (
   [id] integer PRIMARY KEY IDENTITY(1, 1),
   [odometro] integer,
+  [valor_total] numeric(14,2),
+  [status] bit NOT NULL,
   [dt_inicio] date NOT NULL,
   [dt_fim] date,
   [dt_liberacao] date,
@@ -90,7 +99,7 @@ GO
 CREATE TABLE [servicos_os] (
   [id] integer PRIMARY KEY IDENTITY(1, 1),
   [descricao] varchar(255) NOT NULL,
-  [preco] numeric(14,2) NOT NULL,
+  [preco_servico] numeric(14,2) NOT NULL,
   [servicos_id] tinyint NOT NULL,
   [ordem_de_servico_id] integer NOT NULL
 )
@@ -98,7 +107,8 @@ GO
 
 CREATE TABLE [servicos] (
   [id] tinyint PRIMARY KEY IDENTITY(1, 1),
-  [nome] varchar(100) UNIQUE NOT NULL
+  [nome] varchar(100) UNIQUE NOT NULL,
+  [preco] numeric(14,2) NOT NULL
 )
 GO
 
