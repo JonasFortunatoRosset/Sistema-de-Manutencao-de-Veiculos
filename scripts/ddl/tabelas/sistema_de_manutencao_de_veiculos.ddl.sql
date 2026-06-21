@@ -1,7 +1,7 @@
 CREATE DATABASE sistema_de_manutencao_de_veiculos
 GO
 
-USING sistema_de_manutencao_de_veiculos
+USE sistema_de_manutencao_de_veiculos
 GO
 
 CREATE TABLE [faturas] (

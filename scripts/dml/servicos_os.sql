@@ -1,6 +1,5 @@
-INSERT INTO servicos_os (
-    descricao, preco, servicos_id, ordem_de_servico_id
-) VALUES 
+INSERT INTO servicos_os (descricao, preco_servico, servicos_id, ordem_de_servico_id) 
+VALUES  
 ('Substituição de pastilhas de freio dianteiras', 120.00, 1, 1),
 ('Troca de amortecedores dianteiros e batentes', 280.00, 2, 2),
 ('Troca de óleo do motor e filtro de combustível', 80.00, 4, 3),
