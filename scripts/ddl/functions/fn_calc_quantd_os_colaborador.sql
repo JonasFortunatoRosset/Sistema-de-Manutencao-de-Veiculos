@@ -5,9 +5,9 @@ BEGIN
     -- Validacao
 	SELECT @contagem = COUNT(c_os.colaboradores_id) FROM colaboradores_os c_os
 	INNER JOIN ordem_de_servico os ON os.id = c_os.ordem_de_servico_id
-	WHERE colaboradores_id = @colaborador_id
-	AND @dt_inicio >= os.dt_inicio
-	AND @dt_fim <= os.dt_fim
+	WHERE c_os.colaboradores_id = @colaborador_id
+	AND CAST(os.dt_inicio AS DATE) >= @dt_inicio
+	AND CAST(os.dt_fim AS DATE) <= @dt_fim 
 
     -- Retorno do resultado
 	RETURN @contagem;
