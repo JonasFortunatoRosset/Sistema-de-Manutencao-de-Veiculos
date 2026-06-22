@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="pt-br" ng-app="clientesApp">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Gestão de Clientes</title>
+
+<link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.3/css/bootstrap.min.css" rel="stylesheet">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+
+<style>
+  body {
+    background-color: #f4f6f9;
+  }
+  .navbar-brand {
+    font-weight: 600;
+  }
+  .card-clientes {
+    border: none;
+    border-radius: 0.75rem;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+  }
+  table th {
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+    color: #6c757d;
+  }
+  .avatar-circle {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background-color: #0d6efd;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 600;
+    font-size: 0.9rem;
+  }
+  .empty-state {
+    padding: 4rem 1rem;
+    text-align: center;
+    color: #6c757d;
+  }
+  .modal-header {
+    background-color: #0d6efd;
+    color: #fff;
+  }
+  .modal-header .btn-close {
+    filter: invert(1) grayscale(100%) brightness(200%);
+  }
+  .required-mark {
+    color: #dc3545;
+  }
+  .toast-container {
+    z-index: 1080;
+  }
+</style>
+</head>
+<body ng-controller="ClientesController as vm">
+
+<nav class="navbar navbar-dark bg-dark mb-4">
+  <div class="container">
+    <span class="navbar-brand">
+      <i class="bi bi-people-fill me-2"></i>Gestão de Clientes
+    </span>
+  </div>
+</nav>
+
+<div class="container pb-5">
+
+  <!-- Barra de ações -->
+  <div class="card card-clientes mb-3">
+    <div class="card-body d-flex flex-wrap gap-2 align-items-center justify-content-between">
+      <div class="input-group" style="max-width: 360px;">
+        <span class="input-group-text bg-white"><i class="bi bi-search"></i></span>
+        <input type="text" class="form-control" placeholder="Buscar por nome, CPF ou cidade..."
+               ng-model="vm.filtro">
+      </div>
+      <button type="button" class="btn btn-primary" ng-click="vm.abrirNovo()">
+        <i class="bi bi-plus-lg me-1"></i>Novo Cliente
+      </button>
+    </div>
+  </div>
+
+  <!-- Tabela -->
+  <div class="card card-clientes">
+    <div class="card-body p-0">
+      <div class="table-responsive" ng-if="vm.clientes.length">
+        <table class="table table-hover align-middle mb-0">
+          <thead>
+            <tr>
+              <th class="ps-3">Cliente</th>
+              <th>CPF</th>
+              <th>Telefone</th>
+              <th>Cidade/UF</th>
+              <th class="text-end pe-3">Ações</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr ng-repeat="c in vm.clientes | filter:vm.filtro">
+              <td class="ps-3">
+                <div class="d-flex align-items-center gap-2">
+                  <div class="avatar-circle">{{ vm.iniciais(c.nome) }}</div>
+                  <div>
+                    <div class="fw-semibold">{{ c.nome }}</div>
+                    <div class="text-muted small">{{ c.email }}</div>
+                  </div>
+                </div>
+              </td>
+              <td>{{ c.cpf }}</td>
+              <td>{{ c.telefone }}</td>
+              <td>{{ c.cidade }}/{{ c.estado }}</td>
+              <td class="text-end pe-3">
+                <button class="btn btn-sm btn-outline-secondary me-1" title="Editar" ng-click="vm.abrirEdicao(c)">
+                  <i class="bi bi-pencil"></i>
+                </button>
+                <button class="btn btn-sm btn-outline-danger" title="Excluir" ng-click="vm.confirmarExclusao(c)">
+                  <i class="bi bi-trash"></i>
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="empty-state" ng-if="!vm.clientes.length">
+        <i class="bi bi-person-x" style="font-size: 2.5rem;"></i>
+        <p class="mt-3 mb-3">Nenhum cliente cadastrado ainda.</p>
+        <button class="btn btn-primary" ng-click="vm.abrirNovo()">
+          <i class="bi bi-plus-lg me-1"></i>Cadastrar primeiro cliente
+        </button>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- Modal Cadastro/Edição -->
+<div class="modal fade" id="modalCliente" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <form class="modal-content" name="formCliente" ng-submit="vm.salvar()" novalidate>
+      <div class="modal-header">
+        <h5 class="modal-title">
+          <i class="bi" ng-class="vm.modoEdicao ? 'bi-pencil-square' : 'bi-person-plus'"></i>
+          {{ vm.modoEdicao ? 'Editar Cliente' : 'Novo Cliente' }}
+        </h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+
+      <div class="modal-body">
+        <div class="row g-3">
+
+          <div class="col-md-8">
+            <label class="form-label">Nome completo <span class="required-mark">*</span></label>
+            <input type="text" class="form-control" name="nome" ng-model="vm.cliente.nome" required maxlength="120">
+          </div>
+
+          <div class="col-md-4">
+            <label class="form-label">CPF <span class="required-mark">*</span></label>
+            <input type="text" class="form-control" name="cpf" ng-model="vm.cliente.cpf"
+                   placeholder="000.000.000-00" required maxlength="14" ng-disabled="vm.modoEdicao">
+          </div>
+
+          <div class="col-md-6">
+            <label class="form-label">E-mail <span class="required-mark">*</span></label>
+            <input type="email" class="form-control" name="email" ng-model="vm.cliente.email" required>
+          </div>
+
+          <div class="col-md-6">
+            <label class="form-label">Telefone <span class="required-mark">*</span></label>
+            <input type="text" class="form-control" name="telefone" ng-model="vm.cliente.telefone"
+                   placeholder="(00) 00000-0000" required maxlength="15">
+          </div>
+
+          <div class="col-12"><hr class="my-1"></div>
+
+          <div class="col-md-3">
+            <label class="form-label">CEP</label>
+            <input type="text" class="form-control" name="cep" ng-model="vm.cliente.cep" placeholder="00000-000" maxlength="9">
+          </div>
+
+          <div class="col-md-7">
+            <label class="form-label">Rua</label>
+            <input type="text" class="form-control" name="rua" ng-model="vm.cliente.rua">
+          </div>
+
+          <div class="col-md-2">
+            <label class="form-label">Número</label>
+            <input type="text" class="form-control" name="numero" ng-model="vm.cliente.numero">
+          </div>
+
+          <div class="col-md-4">
+            <label class="form-label">Cidade <span class="required-mark">*</span></label>
+            <input type="text" class="form-control" name="cidade" ng-model="vm.cliente.cidade" required>
+          </div>
+
+          <div class="col-md-3">
+            <label class="form-label">Estado <span class="required-mark">*</span></label>
+            <select class="form-select" name="estado" ng-model="vm.cliente.estado" required>
+              <option value="">UF</option>
+              <option ng-repeat="uf in vm.estados" value="{{uf}}">{{uf}}</option>
+            </select>
+          </div>
+
+        </div>
+      </div>
+
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancelar</button>
+        <button type="submit" class="btn btn-primary" ng-disabled="formCliente.$invalid">
+          <i class="bi bi-check-lg me-1"></i>Salvar
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- Modal Confirmação de exclusão -->
+<div class="modal fade" id="modalExcluir" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header bg-danger">
+        <h5 class="modal-title"><i class="bi bi-exclamation-triangle me-1"></i>Confirmar exclusão</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body">
+        <p class="mb-0" ng-if="vm.clienteParaExcluir">
+          Tem certeza que deseja excluir o cliente <strong>{{ vm.clienteParaExcluir.nome }}</strong>?
+          Esta ação não pode ser desfeita.
+        </p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancelar</button>
+        <button type="button" class="btn btn-danger" ng-click="vm.excluir()">
+          <i class="bi bi-trash me-1"></i>Excluir
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Toast de feedback -->
+<div class="toast-container position-fixed bottom-0 end-0 p-3">
+  <div id="toastFeedback" class="toast align-items-center text-white border-0" ng-class="vm.toastClasse">
+    <div class="d-flex">
+      <div class="toast-body">{{ vm.toastMensagem }}</div>
+      <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"></button>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.8.3/angular.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.3/js/bootstrap.bundle.min.js"></script>
+
+<script>
+const API_URL = 'http://localhost:3000'
+
+angular.module('clientesApp', [])
+.controller('ClientesController', function($timeout, $http) {
+  var vm = this;
+  vm.estados = ['AC','AL','AP','AM','BA','CE','DF','ES','GO','MA','MT','MS','MG','PA','PB','PR','PE','PI','RJ','RN','RS','RO','RR','SC','SP','SE','TO'];
+  vm.clientes = [];
+
+  vm.filtro = '';
+  vm.cliente = {};
+  vm.modoEdicao = false;
+  vm.clienteParaExcluir = null;
+  vm.toastMensagem = '';
+  vm.toastClasse = 'bg-success';
+
+  var modalCliente, modalExcluir, toastFeedback;
+  $timeout(function () {
+    modalCliente = new bootstrap.Modal(document.getElementById('modalCliente'));
+    modalExcluir = new bootstrap.Modal(document.getElementById('modalExcluir'));
+    toastFeedback = new bootstrap.Toast(document.getElementById('toastFeedback'));
+  });
+
+  vm.iniciais = function (nome) {
+    if (!nome) return '';
+    var partes = nome.trim().split(' ');
+    var ini = partes[0].charAt(0);
+    if (partes.length > 1) ini += partes[partes.length - 1].charAt(0);
+    return ini.toUpperCase();
+  };
+
+  vm.abrirNovo = function () {
+    vm.modoEdicao = false;
+    vm.cliente = {};
+    modalCliente.show();
+  };
+
+  vm.abrirEdicao = function (cliente) {
+    vm.modoEdicao = true;
+    vm.cliente = angular.copy(cliente);
+    modalCliente.show();
+  };
+
+  vm.salvar = function () {
+    if (vm.modoEdicao) {
+      vm.editarCliente(vm.cliente)
+      vm.notificar('Cliente atualizado com sucesso.', 'bg-success');
+    } else {
+      vm.novoCliente(vm.cliente)
+      vm.notificar('Cliente cadastrado com sucesso.', 'bg-success');
+    }
+    modalCliente.hide();
+  };
+
+  vm.confirmarExclusao = function (cliente) {
+    vm.clienteParaExcluir = cliente;
+    modalExcluir.show();
+  };
+
+  vm.excluir = function () {
+    vm.excluirCliente(vm.clienteParaExcluir)
+    vm.notificar('Cliente excluído com sucesso.', 'bg-danger');
+    modalExcluir.hide();
+    vm.clienteParaExcluir = null;
+  };
+
+  vm.notificar = function (mensagem, classe) {
+    vm.toastMensagem = mensagem;
+    vm.toastClasse = classe;
+    $timeout(function () { toastFeedback.show(); });
+  };
+
+  vm.getClientes = function() {
+    $http.get(`${API_URL}/usuarios`).then(res => {
+      vm.clientes = res.data
+    })
+  }
+
+  vm.novoCliente = function(payload) {
+    $http.post(`${API_URL}/usuarios`, payload).then(res => {
+      vm.getClientes()
+    })
+  }
+
+  vm.editarCliente = function(payload) {
+    $http.put(`${API_URL}/usuarios/${payload.cpf}`, payload).then(res => {
+      vm.getClientes()
+    })
+  }
+
+  vm.excluirCliente = function(payload) {
+    $http.delete(`${API_URL}/usuarios/${payload.cpf}`).then(res => {
+      vm.getClientes()
+    })
+  }
+
+  vm.getClientes()
+});
+</script>
+
+</body>
+</html>
