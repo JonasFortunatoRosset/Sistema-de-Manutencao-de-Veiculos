@@ -24,7 +24,7 @@ Abaixo, segue os scripts SQL separados por tipo:
 + [Tabelas](scripts/ddl/tabelas)
 + [Funções](scripts/ddl/functions)
 + [Gatilhos](scripts/ddl/triggers)
-+ [Procedimentos Armazenado](scripts/ddl/stored_procedures)
++ [Procedimentos Armazenados](scripts/ddl/stored_procedures)
 
 ### Código Fonte
 
