@@ -1,4 +1,4 @@
-## Projeto Sistema de Manutenção de Veículos
+## Projeto Sistema de Manutenção de Veículos - GRUPO A
 
 Este projeto consiste na criação de um modelo físico de um banco de dados para um sistema de gerenciamento de oficina mecânica.
 O projeto foi desenvolvido em Node.js com Express, criando uma API REST para cadastro e gerenciamento de clientes, veículos, ordens de serviço, colaboradores, peças e fornecedores, onde a aplicação faz conexão com o banco de dados através da biblioteca `mssql` com ODBC Driver 17 e realiza operações de adição, atualização e deleção dos dados, usando todos os conceitos e dinâmicas práticas de SQL desenvolvidas em aula.
@@ -46,7 +46,7 @@ Ferramentas e tecnologias utilizadas no desenvolvimento do projeto:
 
 #### 1. Configuração do Banco de Dados
 1. Abra o SSMS e crie um banco de dados chamado `crud_clientes` no LocalDB.
-2. Execute os scripts da pasta `scripts/` nesta ordem: Tabelas (DDL) → DML → Funções, Procedures e Gatilhos.
+2. Execute os scripts da pasta `scripts/` nesta ordem: Tabelas (DDL) → Funções → Procedimentos Armazenados → Gatilhos → DML.
 
 #### 2. Execução da API (Backend)
 1. Navegue até a pasta `api/` e instale as dependências:
