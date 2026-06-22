@@ -36,7 +36,9 @@ Abaixo, segue os scripts SQL separados por tipo:
 
 ### Relatório Final
 
-> 🚧 Em desenvolvimento
+[relatorio-final.docx](relatorio-final/relatorio-final.docx)
+
+[relatorio-final.pdf](relatorio-final/relatorio-final.pdf)
 
 ### Referências Bibliográficas
 
