@@ -86,3 +86,55 @@ BEGIN
     ORDER BY [Posição no Ranking Geral];
 END
 GO
+
+--Pergunta 6: Analise de recorrências 
+--Intervalos em dias dos serviços prestados para cada veiculo de cada cliente. 
+
+
+WITH cliente_veiculo_ordem AS (
+    SELECT 
+        clientes.nome AS nome_cliente, 
+        modelo_veiculo.nome AS modelo_veiculo, 
+        clientes.id AS cli_id, 
+        veiculos.id AS vei_id, 
+        ordem_de_servico.dt_inicio,
+        LEAD(dt_inicio, 1, NULL) OVER (
+            PARTITION BY clientes.id, veiculos.id 
+            ORDER BY ordem_de_servico.dt_inicio DESC
+        ) AS dt_anterior
+    FROM clientes 
+    INNER JOIN veiculos ON clientes.id = veiculos.cliente_id
+    INNER JOIN ordem_de_servico ON veiculos.id = ordem_de_servico.veiculo_id
+    INNER JOIN modelo_veiculo ON veiculos.modelo_veiculo_id = modelo_veiculo.id
+	)
+	SELECT cli_id, nome_cliente, modelo_veiculo,dt_inicio,dt_anterior, DATEDIFF(day, dt_anterior, dt_inicio) AS contagem_dias
+from cliente_veiculo_ordem
+ORDER BY nome_cliente, modelo_veiculo;
+GO
+
+--Pergunta 7: Faturamento dos serviços
+--Quanto cada serviço faturou e a porcentagem dele no faturamento total da oficina
+
+WITH preco_somado AS (
+    SELECT 
+        s.nome AS nome_servico,
+        SUM(so.preco_servico) AS faturamento_do_servico 
+    FROM servicos s
+    INNER JOIN servicos_os so ON s.id = so.servicos_id
+    GROUP BY s.id, s.nome
+), 
+faturamento_calculado AS (
+    SELECT 
+        nome_servico,
+        faturamento_do_servico,
+        SUM(faturamento_do_servico) OVER() AS faturamento_total_oficina
+    FROM preco_somado
+)
+SELECT 
+    nome_servico,
+    faturamento_do_servico,
+    faturamento_total_oficina,
+    ROUND((faturamento_do_servico / faturamento_total_oficina) * 100, 2) AS porcentagem_do_total
+FROM faturamento_calculado
+ORDER BY faturamento_do_servico DESC;
+GO 

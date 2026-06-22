@@ -12,3 +12,23 @@ GO
 CREATE NONCLUSTERED INDEX IX_veiculos_cliente_id 
 ON veiculos (cliente_id);
 GO
+
+--4. Índice para acelerar o JOIN com veículos e entregar as datas já ordenadas para a função LEAD.
+
+CREATE NONCLUSTERED INDEX IX_ordem_de_servico_veiculo_datas
+ON ordem_de_servico (veiculo_id, dt_inicio DESC);
+GO
+
+--5. Índice para otimizar o JOIN entre clientes e veículos e trazer o modelo.
+
+CREATE NONCLUSTERED INDEX IX_veiculos_cliente_modelo
+ON veiculos (cliente_id)
+INCLUDE (modelo_veiculo_id);
+GO
+
+--6. Índice para acelerar o JOIN entre as tabelas servicos_os e servicos e trazer o preço.
+
+CREATE NONCLUSTERED INDEX IX_servicos_os_servicos_preco
+ON servicos_os (servicos_id)
+INCLUDE (preco_servico);
+GO
