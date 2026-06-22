@@ -7,7 +7,7 @@ O sistema permite o controle de clientes, veículos, ordens de serviço, colabor
 Nathan Rocha Gomes - [NathanRochaGomes](https://github.com/NathanRochaGomes)<br>
 Jonas Fortunato Rosset - [JonasFortunatoRosset](https://github.com/JonasFortunatoRosset)<br>
 Emanuel Reus - [Emanuel Reus](https://github.com/EmanuelReus6)<br>
-Gabriel Vaz Lima - conta github<br>
+Gabriel Vaz Lima - [Gabriel-Vazz](https://github.com/gabriel-vazz)<br>
 
 ### Modelo Físico
 Utilizamos a ferramenta de modelagem de dados [dbdiagram.io](https://dbdiagram.io/) para criação do modelo físico do banco de dados, para posterior exportação dos scripts DDL das tabelas e relacionamentos.
