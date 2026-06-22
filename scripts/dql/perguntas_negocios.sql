@@ -22,44 +22,67 @@ WITH calcular_os AS (
 END
 GO
 
--- Pergunta 4: OS abertas por mês em 2025 (ranking + comparação ao mês anterior)
+-- Pergunta 4: Desempenho Mensal de Abertura de OS
+BEGIN
+    DECLARE @ano_referencia INT;
+    SET @ano_referencia = 2025;
 
-WITH os_por_mes AS (
-    SELECT 
-        MONTH(dt_inicio) AS mes,
-        COUNT(*) AS total_os
-    FROM ordem_de_servico
-    WHERE YEAR(dt_inicio) = 2025
-    GROUP BY MONTH(dt_inicio)
-)
-SELECT 
-    mes,
-    total_os,
-    RANK() OVER (ORDER BY total_os DESC) AS posicao_ranking,
-    LAG(total_os) OVER (ORDER BY mes) AS total_mes_anterior,
-    total_os - LAG(total_os) OVER (ORDER BY mes) AS variacao
-FROM os_por_mes
-ORDER BY mes
+
+    WITH os_por_mes AS (
+        SELECT 
+            MONTH(dt_inicio) AS mes,
+            COUNT(*) AS total_os
+        FROM ordem_de_servico
+        WHERE YEAR(dt_inicio) = @ano_referencia
+        GROUP BY MONTH(dt_inicio)
+    ),
+    analise_crescimento AS (
+        SELECT 
+            mes AS 'Mês de Referência',
+            total_os AS 'Total de OS Abertas',
+            ISNULL(LAG(total_os) OVER (ORDER BY mes), 0) AS 'OS Mês Anterior',
+            ISNULL(total_os - LAG(total_os) OVER (ORDER BY mes), 0) AS 'Variação (Crescimento/Queda)',
+            RANK() OVER (ORDER BY total_os DESC) AS 'Ranking no Ano'
+        FROM os_por_mes
+    )
+    
+
+    SELECT * FROM analise_crescimento
+    ORDER BY [Mês de Referência];
+END
 GO
 
---Pergunta 5: Veículo com mais OS, com nome do cliente e ranking
+-- Pergunta 5: Ranking de Clientes e Veículos por Volume de OS
+BEGIN
 
-WITH os_por_veiculo AS (
-    SELECT 
-        v.id AS veiculo_id,
-        v.placa,
-        c.nome AS cliente_nome,
-        COUNT(os.id) AS total_os
-    FROM veiculos v
-    INNER JOIN clientes c ON v.cliente_id = c.id
-    INNER JOIN ordem_de_servico os ON os.veiculo_id = v.id
-    GROUP BY v.id, v.placa, c.nome
-)
-SELECT 
-    placa,
-    cliente_nome,
-    total_os,
-    RANK() OVER (ORDER BY total_os DESC) AS posicao_ranking
-FROM os_por_veiculo
-ORDER BY posicao_ranking
+    DECLARE @dt_inicio DATE;
+    DECLARE @dt_fim DATE;
+
+    SET @dt_inicio = '2025-01-01';
+    SET @dt_fim = '2025-12-31';
+
+    WITH os_por_veiculo AS (
+        SELECT 
+            c.nome AS cliente_nome,
+            v.placa AS placa_veiculo,
+            COUNT(os.id) AS total_os
+        FROM veiculos v
+        INNER JOIN clientes c ON v.cliente_id = c.id
+        INNER JOIN ordem_de_servico os ON os.veiculo_id = v.id
+        WHERE os.dt_inicio BETWEEN @dt_inicio AND @dt_fim
+        GROUP BY v.id, v.placa, c.nome
+    ),
+    relatorio_final AS (
+        SELECT 
+            cliente_nome AS 'Nome do Cliente',
+            placa_veiculo AS 'Placa do Veículo',
+            total_os AS 'Volume de Serviços (OS)',
+            RANK() OVER (ORDER BY total_os DESC) AS 'Posição no Ranking Geral'
+        FROM os_por_veiculo
+    )
+    
+
+    SELECT * FROM relatorio_final
+    ORDER BY [Posição no Ranking Geral];
+END
 GO
