@@ -22,7 +22,56 @@ WITH calcular_os AS (
 END
 GO
 
--- Pergunta 4: Desempenho Mensal de Abertura de OS
+-- Pergunta 2: Gere um relatorio com filtro por cargo e determinado escopo de tempo a 
+-- quantidade de OS fechadas por colaborador e o lucro líquido obtido com ele no período
+
+BEGIN
+	DECLARE @dt_inicio DATE;
+	DECLARE @dt_fim DATE;
+	DECLARE @cargo_filtro VARCHAR(100);
+
+	SET @dt_inicio = '2024-01-01';
+	SET @dt_fim = '2026-01-31';
+	SET @cargo_filtro = 'Mecânico Sênior';
+
+	WITH metricas_colaborador AS (
+		-- Filtra o cargo e calcula a quantidade de OS e o Lucro Líquido
+		SELECT 
+			c.id,
+			c.nome AS [nome colaborador],
+			car.nome AS cargo,
+			dbo.fn_calc_quantd_os_colaborador(@dt_inicio, @dt_fim, c.id) AS [os fechadas],
+			dbo.fn_calc_valor_liquido(@dt_inicio, @dt_fim, c.id) AS [lucro liquido]
+		FROM colaboradores c
+		INNER JOIN cargos car ON car.id = c.cargo_id
+		WHERE car.nome = @cargo_filtro
+		  AND c.dt_demissao IS NULL
+		  AND CAST(c.dt_cadastro AS DATE) <= @dt_fim
+	),
+	rankeamento_performance AS (
+		-- Cria o ranking baseado no lucro líquido gerado dentro do grupo selecionado
+		SELECT 
+			id,
+			[nome colaborador],
+			cargo,
+			[os fechadas],
+			[lucro liquido],
+			DENSE_RANK() OVER (ORDER BY [lucro liquido] DESC) AS [posicao ranking]
+		FROM metricas_colaborador
+	)
+	-- Retorna o resultado final ordenado pelos melhores resultados do cargo
+	SELECT 
+		[posicao ranking],
+		[nome colaborador],
+		cargo,
+		[os fechadas],
+		[lucro liquido]
+	FROM rankeamento_performance
+	ORDER BY [posicao ranking] ASC;
+END
+GO
+
+-- Pergunta 3: Desempenho Mensal de Abertura de OS
 BEGIN
     DECLARE @ano_referencia INT;
     SET @ano_referencia = 2025;
@@ -52,7 +101,7 @@ BEGIN
 END
 GO
 
--- Pergunta 5: Ranking de Clientes e Veículos por Volume de OS
+-- Pergunta 4: Ranking de Clientes e Veículos por Volume de OS
 BEGIN
 
     DECLARE @dt_inicio DATE;
@@ -87,7 +136,7 @@ BEGIN
 END
 GO
 
---Pergunta 6: Analise de recorrências 
+--Pergunta 5: Analise de recorrências 
 --Intervalos em dias dos serviços prestados para cada veiculo de cada cliente. 
 
 
@@ -112,7 +161,7 @@ from cliente_veiculo_ordem
 ORDER BY nome_cliente, modelo_veiculo;
 GO
 
---Pergunta 7: Faturamento dos serviços
+--Pergunta 6: Faturamento dos serviços
 --Quanto cada serviço faturou e a porcentagem dele no faturamento total da oficina
 
 WITH preco_somado AS (

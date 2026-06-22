@@ -32,3 +32,29 @@ CREATE NONCLUSTERED INDEX IX_servicos_os_servicos_preco
 ON servicos_os (servicos_id)
 INCLUDE (preco_servico);
 GO
+
+-- 7. Índice para acelerar a filtragem inicial de colaboradores ativos e escopo de tempo de cadastro 
+
+CREATE NONCLUSTERED INDEX IX_colaboradores_demissao_cadastro
+ON colaboradores (dt_demissao, dt_cadastro);
+GO
+
+-- 8. Índice para acelerar o JOIN entre a tabela de colaboradores e a tabela de cargos.
+
+CREATE NONCLUSTERED INDEX IX_colaboradores_cargo_id
+ON colaboradores (cargo_id);
+GO
+
+-- 9. Otimiza a busca pelo nome do cargo e cobre o JOIN com colaboradores
+
+CREATE NONCLUSTERED INDEX IX_cargos_nome_id
+ON cargos (nome)
+INCLUDE (id);
+GO
+
+-- 10. Otimiza o filtro de colaboradores ativos, data de cadastro e o JOIN com o cargo
+
+CREATE NONCLUSTERED INDEX IX_colaboradores_performance
+ON colaboradores (cargo_id, dt_demissao, dt_cadastro)
+INCLUDE (nome, salario); -- Inclui salario porque a funcao fn_calc_valor_liquido usa ele
+GO
