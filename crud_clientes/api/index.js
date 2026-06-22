@@ -12,8 +12,8 @@ app.use(express.json());
 const config = {
   connectionString: 
     'Driver={ODBC Driver 17 for SQL Server};' +
-    'Server=(localdb)\\crud_clientes;' +
-    'Database=crud_clientes;' +
+    'Server=(localdb)\\sistema-de-manutencao-de-veiculos;' +
+    'Database=sistema_de_manutencao_de_veiculos;' +
     'Trusted_Connection=Yes;'
 };
 let pool;
